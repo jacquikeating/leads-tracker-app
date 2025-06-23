@@ -1,14 +1,15 @@
 {
-  "name": "Scrim-s069lo1",
-  "description": "https://scrimba.com/frontend-path-c0j/~07su",
+  "name": "scrim-s069lo1",
+  "description": "leads tracker scrim",
   "scripts": {
     "start": "vite",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
+  "type": "module",
   "dependencies": {
+    "firebase": "^11.9.1",
     "vite": "latest"
-  },
-  "devDependencies": {}
+  }
 }
