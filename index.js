@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, push } from "firebase/database";
+import { getDatabase, ref, push, onValue } from "firebase/database";
 
 const firebaseConfig = {
   databaseURL: "https://leads-tracker-app-3f2fe-default-rtdb.firebaseio.com/",
@@ -8,6 +8,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const referenceInDB = ref(database, "leads");
+
+onValue(referenceInDB, function (snapshot) {
+  console.log(snapshot.val());
+});
 
 const inputEl = document.getElementById("input-el");
 const inputBtn = document.getElementById("input-btn");
