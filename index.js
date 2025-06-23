@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, push, onValue } from "firebase/database";
+import { getDatabase, ref, push, onValue, remove } from "firebase/database";
 
 const firebaseConfig = {
   databaseURL: "https://leads-tracker-app-3f2fe-default-rtdb.firebaseio.com/",
@@ -10,15 +10,17 @@ const database = getDatabase(app);
 const referenceInDB = ref(database, "leads");
 
 onValue(referenceInDB, function (snapshot) {
-  const snapshotValues = snapshot.val();
-  const leads = Object.values(snapshotValues);
-  render(leads);
+  if (snapshot.exists()) {
+    const snapshotValues = snapshot.val();
+    const leads = Object.values(snapshotValues);
+    render(leads);
+  }
 });
 
 const inputEl = document.getElementById("input-el");
 const inputBtn = document.getElementById("input-btn");
 const ulEl = document.getElementById("ul-el");
-// const deleteBtn = document.getElementById("delete-btn");
+const deleteBtn = document.getElementById("delete-btn");
 
 function render(leads) {
   let listItems = "";
@@ -34,8 +36,10 @@ function render(leads) {
   ulEl.innerHTML = listItems;
 }
 
-// deleteBtn.addEventListener("dblclick", function () {
-// });
+deleteBtn.addEventListener("dblclick", function () {
+  remove(referenceInDB);
+  ulEl.innerHTML = "";
+});
 
 inputBtn.addEventListener("click", function () {
   push(referenceInDB, inputEl.value);
